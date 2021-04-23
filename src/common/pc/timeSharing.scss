@@ -1,0 +1,119 @@
+/* 主要 样式 */
+.container{
+    display:flex;
+    flex-direction: row;
+    font-size:0.75rem;
+    overflow: hidden;
+    // background:#000;
+}
+.leftMess,.rightMess{
+    flex:1.2;
+    position: relative;
+    top:1.4rem;
+    height: calc(100% - 1.4rem);
+    .valueItem{
+        position: absolute;
+        z-index:99;
+        transform: translateY(-50%);
+    }
+}
+.leftMess{
+    border-right:1px solid #EEEEEE;
+    .valueItem{
+        right:0;
+    }
+}
+.rightMess{
+    border-left:1px solid #EEEEEE;
+    .valueItem{
+        left:0;
+    }
+}
+.content{
+    position: relative;
+    flex:12;
+    display:flex;
+    flex-direction: column;
+    .marketMess{
+        display:flex;
+        height:1.4rem;
+        align-items:center;
+        border-bottom: 1px solid #ddd;
+        outline-width:1px;
+        outline-style:solid;
+        outline-color:#EEEEEE;
+        span{
+            margin-left:0.2rem;
+        }
+    }
+    .qlContainer{
+        flex:1;
+        position:relative;
+        .dealMount{
+            position: absolute;
+            margin-left:0.2rem;
+            z-index:99;
+            line-height:20px;
+        }
+        .updateValue,.updateRate{
+            position: absolute;
+            z-index:100;
+            color:#fff;
+        }
+        .updateValue{
+            left:0;
+            transform:translate(-100%,-50%);
+        }
+        .updateRate{
+            right:0;
+            transform:translate(100%,-50%);
+        }
+    }
+    .marketTime{
+        position: relative;
+        height:1.4rem;
+        .marketTimeItem{
+            position:absolute;
+            z-index:99;
+            transform:translateX(-50%);
+            &:first-child{
+                transform:translateX(0);
+            }
+            &:last-child{
+                transform:translateX(-100%);
+            }
+        }
+    }
+}
+/* 简单的主体配置 */
+
+.lightUpColor{
+    color:#f00;
+}
+.lightDownColor{
+    color:#66A588;
+}
+.lightGenText{
+    color:#000;
+}
+.lightDealMount{
+    color:#000;
+}
+.lightBg{
+    background:#fff;
+}
+.darkUpColor{
+    color:#FF2B1C;
+}
+.darkDownColor{
+    color:#00E600;
+}
+.darkGenText{
+    color:#fff;
+}
+.darkDealMount{
+    color:#FCFC54;
+}
+.darkBg{
+    background:#000;
+}

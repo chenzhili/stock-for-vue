@@ -1,0 +1,121 @@
+/* 主要 样式 */
+.container{
+    display:flex;
+    flex-direction: row;
+    font-size:0.75rem;
+    overflow: hidden;
+}
+.content{
+    flex:12;
+    position: relative;
+    display:flex;
+    flex-direction: column;
+    .marketMess{
+        display:flex;
+        height:1.4rem;
+        align-items:center;
+        border-bottom: 1px solid #ddd;
+        outline-width:1px;
+        outline-style:solid;
+        outline-color:#EEEEEE;
+        span{
+            margin-left:0.2rem;
+        }
+    }
+    .qlContainer{
+        flex:1;
+        position: relative;
+        .modalMess{
+            position:absolute;
+            border:1px solid #ddd;
+            border-radius:1em;
+            padding:.6em;
+            // word-break: break-all;
+            background:rgba(255,255,255,.7);
+            line-height:2em;
+            text-align:left;
+            // width:115px;
+            box-sizing: border-box;
+            white-space: nowrap;
+            min-width: 120px;
+        }
+        .updateValue,.updateDate,.updateMA{
+            position: absolute;
+            z-index:100;
+            color:#fff;
+            user-select: none;
+        }
+        .updateValue{
+            right:0;
+            transform:translate(100%,-50%);
+        }
+        .updateDate{
+            line-height:20px;
+            transform:translateX(-50%);
+        }
+        .updateMA{
+            top:0;
+            line-height:20px;
+            .ma{margin-left: .5em;}
+        }
+    }
+}
+.rightMess{
+    flex:1.2;
+    position: relative;
+    top:1.4rem;
+    height: calc(100% - 1.4rem);
+    border-left:1px solid #ddd;
+    .valueItem{
+        position: absolute;
+        left:0;
+        z-index:99;
+        transform: translateY(-50%);
+    }
+}
+
+
+/* 简单的主体配置 到时候可以 配置 变量 */
+
+.lightUpColor{
+    color:#f00;
+}
+.lightUpColorBg{
+    background:#f00;
+}
+.lightDownColor{
+    color:#66A588;
+}
+.lightDownColorBg{
+    background:#66A588;
+}
+.lightGenText{
+    color:#000;
+}
+.lightDealMount{
+    color:#000;
+}
+.lightBg{
+    background:#fff;
+}
+.darkUpColor{
+    color:#FF2B1C;
+}
+.darkUpColorBg{
+    background:#FF2B1C;
+}
+.darkDownColor{
+    color:#00E600;
+}
+.darkDownColorBg{
+    background:#00E600;
+}
+.darkGenText{
+    color:#fff;
+}
+.darkDealMount{
+    color:#FCFC54;
+}
+.darkBg{
+    background:#000;
+}

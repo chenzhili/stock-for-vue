@@ -1,0 +1,14 @@
+*.js
+*.png
+*.eot
+*.ttf
+*.woff
+*.json
+*.woff2
+*.jpg
+*.svg
+
+/dist/
+/lib/
+/example/
+/src/iconfont/

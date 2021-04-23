@@ -1,0 +1,102 @@
+/* 主要 样式 */
+.container{
+    display:flex;
+    flex-direction:column;
+    font-size:0.625rem;
+    user-select: none;
+    .valueItem{
+        position: absolute;
+        z-index:99;
+        transform: translateY(-50%);
+        &.valueItemRight{
+            right:0;
+        }
+        &:first-child{
+            transform: translateY(0);
+        }
+        &:last-child{
+            transform: translateY(-100%); 
+        }
+    }
+    .marketMess{
+        display:flex;
+        flex-wrap: wrap;
+        // justify-content: space-around;
+        // height:1.4rem;
+        align-items:center;
+        span{
+            margin-left:0.2rem;
+        }
+    }
+    .qlContainer{
+        flex:1;
+        position:relative;
+        outline:1px solid #ddd;
+        .dealMount{
+            position: absolute;
+            margin-left:0.2rem;
+            z-index:99;
+            line-height:20px;
+        }
+        .updateValue,.updateRate{
+            position: absolute;
+            z-index:100;
+            color:#fff;
+            transform:translateY(-50%);
+        }
+        .updateValue{
+            left:0;
+        }
+        .updateRate{
+            right:0;
+        }
+    }
+    .marketTime{
+        position: relative;
+        height:1.4rem;
+        .marketTimeItem{
+            position:absolute;
+            z-index:99;
+            transform:translateX(-50%);
+            &:first-child{
+                transform:translateX(0);
+            }
+            &:last-child{
+                transform:translateX(-100%);
+            }
+        }
+    }
+}
+
+/* 简单的主体配置 */
+
+.lightUpColor{
+    color:#f00;
+}
+.lightDownColor{
+    color:#66A588;
+}
+.lightGenText{
+    color:#000;
+}
+.lightDealMount{
+    color:#000;
+}
+.lightBg{
+    background:#fff;
+}
+.darkUpColor{
+    color:#FF2B1C;
+}
+.darkDownColor{
+    color:#00E600;
+}
+.darkGenText{
+    color:#fff;
+}
+.darkDealMount{
+    color:#FCFC54;
+}
+.darkBg{
+    background:#000;
+}

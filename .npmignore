@@ -1,0 +1,27 @@
+
+.babelrc
+.gitignore
+README_self.md
+yarn.lock
+jest.config.js
+vue.config.js
+babel.config.js
+commitlint.config.js
+stylelint.config.js
+.lintstagedrc.json
+.huskyrc.json
+.history
+/dll/
+/rollup-config/
+/example/
+/src/
+/tests/
+/coverage/
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
