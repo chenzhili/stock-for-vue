@@ -1,6 +1,6 @@
 
 # 项目描述
-    就是用于制作react 和 vue 的 有关 行情 的 组件
+    面向 vue-next 定制的相关 插件系统
 ## 主要核心目录结构
     主逻辑：/src/core/index.js 为入口
     ui目录：
