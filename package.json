@@ -5,6 +5,24 @@
   "module": "lib/index.min.js",
   "browser": "lib/index.min.js",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chenzhili/stock-for-vue"
+  },
+  "homepage": "https://github.com/chenzhili/stock-for-vue#readme",
+  "keywords": [
+    "股市",
+    "曲线",
+    "股市走势",
+    "股市k线",
+    "k线",
+    "vue3",
+    "vue-next",
+    "stockMarket",
+    "stock-market",
+    "market",
+    "canvas"
+  ],
   "scripts": {
     "build:prod": "node rollup-config/configDir.js && cross-env NODE_ENV=prod babel-node ./rollup-config/index.js",
     "build:watch": "node rollup-config/configDir.js && cross-env NODE_ENV=watch babel-node ./rollup-config/index.js",

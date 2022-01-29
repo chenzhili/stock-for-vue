@@ -27,5 +27,5 @@ const whiteList = {
   timeSharingPC: 1,
   index: 1
 }
-debugger
+
 module.exports = files.filter(file => whiteList[file])

@@ -1,19 +1,21 @@
 <template>
    <div class="container">
-    <h2 class="title">{{title}}</h2>
+      <KLineGraphComH5 :dataGraph="dataGraphForK" :config="configForK" :sTt="sTt"></KLineGraphComH5>
+    <!-- <h2 class="title">{{title}}</h2>
     <div class="content">
       <div class="left">
         左侧内容：Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis perspiciatis provident, necessitatibus quae labore, similique id dignissimos sit mollitia vero ullam repudiandae veniam molestias, ratione possimus magnam nihil nobis enim.
         <div class="btn" @click="click">点击</div>
       </div>
       <div class="main">
+        <TimeSharingH5 :dataGraph="dataGraphForTime" :config="configForTime" :frameName="frame"></TimeSharingH5> -->
          <!-- <TimeSharing :dataGraph="dataGraphForTime" :config="configForTime" :frameName="frame"></TimeSharing> -->
-       <KLineGraphCom :dataGraph="dataGraphForK" :config="configForK" :sTt="sTt"></KLineGraphCom>
-      </div>
+       <!-- <KLineGraphCom :dataGraph="dataGraphForK" :config="configForK" :sTt="sTt"></KLineGraphCom> -->
+      <!-- </div>
       <div
         class="right"
       >右侧内容：Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam nobis ullam voluptate. A maxime autem velit ducimus quos modi, natus esse molestias id officia inventore odit doloribus quod maiores deserunt?</div>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
@@ -33,7 +35,7 @@ export default {
         preClosePrice: prevPrice
       },
       dataGraphForK: { 
-        data: [] //kData//dData //mData//kData
+        data: kData//dData //mData//kData
       },
       frame:'hk',// a hk  night1  nigh2
       sTt: [],
