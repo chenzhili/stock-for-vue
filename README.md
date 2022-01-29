@@ -1,122 +1,162 @@
-
 # 项目描述
-    面向 vue-next 定制的相关 插件系统
-## 主要核心目录结构
-    主逻辑：/src/core/index.js 为入口
-    ui目录：
-        1、vue目录：/src/vueCom/index.js 为入口
-## 基本用法
-1、统一的 props
-        dataGraph[Object]： 这个是 主数据
-        时分图：
-```js
-    dataGraph = {
-        data[Array:Object]: timeSharing, //一个 item 的 Object {time,curPrice,rate,totalMoney,avPrice,dealMount};分别对应的意义{时间,当前价,收益率,成交总价,平均价,成交量}
-        preClosePrice[String]: prevPrice, //这是 昨天的收盘价
-    }
+
+面向**股市走势**开发的**k 线 和 分时线** 插件，并且分别适配 **h5 和 pc** 版本和支持自定义主题，此插件主要面向**vue-next(vue3)**用户，如果是**vue2**用户[**请点击**](https://www.npmjs.com/package/stock-market-graph)
+
+# [项目存放地址](https://github.com/chenzhili/stock-for-vue)
+
+测试地址在 /example 里
+
+# 主要用法
+
+```shell
+# 安装
+# npm
+npm i stock-for-vue --save
+# yarn
+yarn add stock-for-vue
 ```
 
-        k线图:
-```js
-    /* dataGraph = {
-        data[Array:Object]: kData, //一个 item 的 Object {date,dealMount,open,high,low,close,rate};分别对应的意义{日期,成交量,开盘价,最高价,最低价,收盘价,收益率}
-    } */
-    /* 由于转换周期的增加，字段发生变化 */
-     dataGraph={
-         data:"对应的历史数据，每一项的值跟上面一样",
-         curData:"对应当前开盘的数据，每一项的值跟上面一样"
-     } 
-     config={
-        insType: insType.kLineGraph,
-        theme: "light",
-        initShowN // number 当前初始化的 k线的 根数
-        hideDealGrid // boolean 隐藏量为true，可以不传
-      }
-     height="height容器的区域"
-     sTt=[source,target] //source是资源数据的对应的类型，target是需要转换的标准
-     frame="展示的时段类型"// A股：'a' 港股：'hk' 夜盘上半段：'night1' 夜盘下半段：'night2'    //鄢志伟 2021/3/11
-     /* 
-        target:
-        m5: 5,  //五分钟
-        m30: 30, //30分钟
-        m60: 60, //60分钟
-        w: 70,   //周
-        q: 80,   // 季度
-        hy: 90,  //半年
-        y: 100  // 年
-        
+## 1. js 引入
 
+```javascript
+//1、 拿到 Vue 的 实例
+const app = createApp({
+  render: () => h(App),
+})
+//2、 全局引入
+import StockForVue from 'stock-for-vue'
+app.install(StockForVue)
+//或者 按需引入
+import { kLineGraphPC } from 'stock-for-vue/kLineGraphPC' // 相关插件都是这样引入
+app.install(StockForVue)
+```
+
+## 2. 引用地方
+
+```md
+> 1.  PC
+
+<!-- 分时线 -->
+
+<TimeSharing :dataGraph="dataGraphForTime" :config="configForTime" :frameName="frame"></TimeSharing>
+
+<!-- k线 -->
+
+<KLineGraphCom :dataGraph="dataGraphForK" :config="configForK" :sTt="sTt"></KLineGraphCom>
+
+> 2.  H5
+
+<!-- 分时线 -->
+
+<TimeSharingH5 :dataGraph="dataGraphForTime" :config="configForTime" :frameName="frame"></TimeSharingH5>
+
+<!-- k线 -->
+
+<KLineGraphComH5 :dataGraph="dataGraphForK" :config="configForK" :sTt="sTt"></KLineGraphComH5>
+```
+
+```typescript
+// 对应的 数据结构及意义
+/* 1、 k线相关 */
+interface KDataObj {
+    date: string,               // 格式化的 日期
+    dealMount: number|string,   // 成交量，string也是 数值的 字符串
+    open: number|string,        // 开盘价，string也是 数值的 字符串
+    high: number|string,        // 最高价，string也是 数值的 字符串
+    low: number|string,         // 最低价，string也是 数值的 字符串
+    close: number|string,       // 收盘价，string也是 数值的 字符串
+    rate: number|string         // 收益率，string也是 数值的 字符串
+}
+interface KDataGraph {
+    data: Array<KDataObj>
+}
+const dataGraphForK: KDataGraph; // 数据结构在上面
+
+/* 2、分时线相关 */
+interface TDatObj {
+    time: string,               // 格式化的 时间，string也是 数值的 字符串
+    curPrice: number|string,    // 当前加，string也是 数值的 字符串
+    rate: number|string,        // 收益率，string也是 数值的 字符串
+    totalMoney: number|string,  // 成交总价，string也是 数值的 字符串
+    avPrice: number|string,     // 成交均价，string也是 数值的 字符串
+    dealMount: number|string    // 成交量，string也是 数值的 字符串
+}
+interface TDataGraph {
+    data: Array<TDatObj>,
+    preClosePrice: number|string // 昨结价，string也是 数值的 字符串
+}
+const dataGraphForTime: TDataGraph; // 数据结构在上面
+
+/* 统一参数 */
+// 1、config 参数
+type Color = string;    // 只能是 颜色 相关的 rgba,rgb,#xxx 相关表现颜色的
+interface Theme {
+    time: {
+        dealMount: {
+            even: Color,    // 偶数
+            odd: Color,     // 奇数
+        },
+        text: {
+            asend: Color,   // 升序
+            desc: Color     // 降序
+        },
+        line: {
+            curPrice: Color,// 现价
+            avPrice: Color, // 均价
+        },
+    },
+    k: {
+        descFill: Color,    // 下降的填充色
+        descStroke: Color,  // 下降的轮廓颜色
+        asendFill: Color,   // 上升的填充色
+        asendStroke: Color, // 上升的轮廓颜色
+        MAColor: [Color, Color, Color] // 均线的颜色
+    },
+    bg: Color, // 背景色
+    maskLine: Color // 操作线的颜色
+}
+interface Config {
+    insType: '1' | '0',             // 实例化的类型 '0'：分时线， '1'： k线
+    theme?: 'light' | 'dark' | Theme,// 不填默认为 light
+    initShowN?: number,              // 初始展现 k线的个数，不填默认为 20
+    hideDealGrid?: bool,             // 是否显示 交易量
+    MAConfig?: Array<number>          // 均线相关
+}
+const config: Config; // 配置 相关参数
+
+// 2、frameName 相关 ------------ 用于 控制不同 市场 时间范围的 绘制，包括 A股相关，港股，夜间期货等
+type FrameName = 'a' | 'hk' | 'night1' | 'night2';
+const frame?:FrameName; // 可不传，默认是 A股相关时间区域
+
+// 3、sTt 可以用小的时间转换 为 大的 时间，如 一分钟 转 五分钟， 可不传
+    /*
         source:
-        m1: 1,  //1分钟
-        m15: 15, //15分钟
-        d: 65, //  日
-        M: 75  // 月
+            m1: 1,  //1分钟
+            m15: 15, //15分钟
+            d: 65, //  日
+            M: 75  // 月
+    */
+    type Source = 'm1' | 'm15' | 'd' : 'M';
+    /*
+        target:
+            m5: 5,  //五分钟
+            m30: 30, //30分钟
+            m60: 60, //60分钟
+            w: 70,   //周
+            q: 80,   // 季度
+            hy: 90,  //半年
+            y: 100  // 年
+    */
+type Target = 'm5' | 'm30' | 'm60' | 'w' | 'q' | 'hy' | 'y'
 
-        20200225目前实现的转换：分钟转换为其他分钟，日转换为周
-*/
+const sTt?:Array[Source, Target]; // 并且注意 转换上 source 必须 小于 target
+
+// 4、 对于插件的 容器 尺寸-----可不传
+const width?: string;   // 默认是 100%
+const height?: string;  // 默认是 100%
+
 ```
 
-        config[Object]：这个是配置信息
-        例子：
-```js
-    {
-        insType: insType.timeSharingDiagram,//实例的类型，有 timeSharingDiagram: "0",kLineGraph: "1"
-        theme: "light",//主体，有 light , dark
-    }
-```
+# 相关插件名
 
-        width[String]：这个是需要绘制的宽度
-
-        height[String]：这个是需要绘制的高度
-
-2、vue:
-```js
-    Vue.use(QLStockMarket);
-    //就可以直接应用 插件了
-    kLineGraphPC,TimeSharingPC,kLineGraphForH5,TimeSharingH5
-```
-3、react:
-```js
-    import {kLineGraphPC,TimeSharingPC,kLineGraphForH5,TimeSharingH5} from "路径"
-````
-
-## 对于框架的一些注意点
-
-### canvas 在 移动端的绘制问题
-
-    1、物理像素（DP）
-    物理像素也称设备像素，我们常听到的手机的分辨率及为物理像素，比如 iPhone 7的物理分辨率为750 * 1334。屏幕是由像素点组成的，也就是说屏幕的水平方向有750的像素点，垂直方向上有1334个像素点
-
-    2、设备独立像素（DIP）
-    也称为逻辑像素，比如Iphone4和Iphone3GS的尺寸都是3.5寸，iphone4的物理分辨率是640 980，而3gs只有320 480，假如我们按照真实布局取绘制一个320px宽度的图像时，在iphone4上只有一半有内容，剩下的一半则是一片空白，为了避免这种问题，我们引入了逻辑像素，将两种手机的逻辑像素都设置为320px，方便绘制
-
-    3、设备像素比（DPR）
-    DPR = 物理像素/逻辑像素  就是 window下的 devicePixelRatio
-
-    4、实际导致 pc 和 h5 上 canvas 绘制 失贞的 情况：
-    就是因为 在 绘制 1px 前端 css 的像素点的 时候 和 物理像素点 不对应，导致 1 个 像素点 需要 四个 物理像素点 进行绘制，导致 设备 运用 平滑过渡效果四个点，导致 模糊不清；
-
-    5、解决移动端模糊的 问题： 精髓 就是 用 一个 css 像素点，绘制 一个 物理像素 点，就是 放大 媒体对象 canvas(等价于img)；
-    将 canvas 看做 是 img，在 canvas 上 有 style.width style.height attr.width attr.height,这四个值 代表 在 浏览器 绘制的宽高 和 canvas 画布 实际 的 宽高；我们 放大 canvas 的 宽 和 高 ，让他 和 物理像素 一样就可以了；
-
-    ```js
-        html 
-            <canvas></canvas>
-        js
-            canvas.style.width = "100px"
-            canvas.style.height = "100px"
-            const dps = window.devicePixelRatio;
-            canvas.width = canvas.style.width * dps;
-            canvas.height = canvas.style.height * dps;
-            const ctx = canvas.getContext("2d");
-            ctx.scale(dps,dps);
-    ```
-### 在实例化 canvas 的时候，注意不同方法 之间 的传参 问题，当前数据的共享性问题
-
-### 在 事件监听中 防止 实例 内部 部分数据的 内存溢出 问题
-
-## 最后打包问题，详情看 package.json 文件
-
-
-
-
+kLineGraphPC,TimeSharingPC,kLineGraphForH5,TimeSharingH5

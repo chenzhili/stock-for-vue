@@ -1,6 +1,6 @@
 {
   "name": "stock-for-vue",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "main": "lib/index.min.js",
   "module": "lib/index.min.js",
   "browser": "lib/index.min.js",
